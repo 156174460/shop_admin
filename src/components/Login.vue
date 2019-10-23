@@ -1,5 +1,5 @@
 <template>
- <div class="login">login</div>
+ <div class="login">login我试试加了两个字</div>
 </template>
 
 <script>
