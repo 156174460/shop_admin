@@ -2,12 +2,21 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Index from '../components/Index.vue'
+// import Users form ''
+import Users from '../components/users.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/index' },
-  { path: '/index', name: 'index', component: Index },
+  {
+    path: '/index',
+    name: 'index',
+    component: Index,
+    childrn: [
+      { path: ' /users', component: Users }
+    ]
+  },
 
   { path: '/login', name: 'login', component: Login }
 ]
