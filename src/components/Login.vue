@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data () {
     return {
@@ -59,39 +58,60 @@ export default {
     reset () {
       this.$refs.form.resetFields()
     },
-    login () {
-      this.$refs.form.validate(isValid => {
-        // 校验失败, 直接return
-        if (!isValid) return
-        console.log('发送ajax请求')
+    async login () {
+      try {
+        await this.$refs.form.validate()
+        const { data, meta } = await this.$axios.post('login', this.form)
+        if (meta.status === 200) {
+          // console.log(meta.msg)
+          localStorage.setItem('token', data.token)
 
-        axios
-          .post('http://localhost:8888/api/private/v1/login', this.form)
-          .then(res => {
-            const { meta, data } = res.data
-            if (meta.status === 200) {
-              // console.log(meta.msg)
-              localStorage.setItem('token', data.token)
-
-              this.$message({
-                type: 'success',
-                message: meta.msg,
-                duration: 1000
-              })
-
-              // this.$router.push('/index')
-              this.$router.push({ name: 'index' })
-            } else {
-              this.$message.error(meta.msg)
-            }
+          this.$message({
+            type: 'success',
+            message: meta.msg,
+            duration: 1000
           })
-      })
+
+          // this.$router.push('/index')
+          this.$router.push({ name: 'index' })
+        } else {
+          this.$message.error(meta.msg)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      // this.$refs.form.validate(isValid => {
+      //   // 校验失败, 直接return
+      //   if (!isValid) return
+      //   console.log('发送ajax请求')
+
+      //   this.$axios
+      //     .post('login', this.form)
+      //     .then(res => {
+      //       const { meta, data } = res
+      //       if (meta.status === 200) {
+      //         // console.log(meta.msg)
+      //         localStorage.setItem('token', data.token)
+
+      //         this.$message({
+      //           type: 'success',
+      //           message: meta.msg,
+      //           duration: 1000
+      //         })
+
+      //         // this.$router.push('/index')
+      //         this.$router.push({ name: 'index' })
+      //       } else {
+      //         this.$message.error(meta.msg)
+      //       }
+      //     })
     }
+
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login {
   width: 100%;
   height: 100%;

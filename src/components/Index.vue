@@ -7,7 +7,7 @@
       <div class="xt">电商管理系统</div>
       <div class="logn">
         欢迎光临~
-        <a href="javascript:;">退出</a>
+        <a href="javascript:;" @click='logn' >退出</a>
       </div>
     </el-header>
 
@@ -26,7 +26,7 @@
               <span>用户管理</span>
             </template>
 
-            <el-menu-item index="1-1">
+            <el-menu-item index="users">
               <i class="el-icon-location"></i>
               <span>用户列表</span>
             </el-menu-item>
@@ -39,11 +39,11 @@
               <span>权限管理</span>
             </template>
 
-            <el-menu-item index="2-1">
+            <el-menu-item index="roles">
               <i class="el-icon-location"></i>
               <span>角色列表</span>
             </el-menu-item>
-            <el-menu-item index="2-2">
+            <el-menu-item index="rights">
              <i class="el-icon-location"></i>
               <span>权限列表</span>
             </el-menu-item>
@@ -52,14 +52,27 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <router-view></router-view>
+       <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    logn () {
+      this.$confirm('退出系统，是否继续？', '提示', {
+        type: 'warning'
+      }).then(() => {
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+      }).catch(e => {
+        console.log(e)
+      })
+    }
+  }
+}
 </script>
 
 <style lang='scss' scoped>
