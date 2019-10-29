@@ -95,7 +95,7 @@
     <el-dialog title="修改" :visible.sync="editVisible" width="30%">
       <el-form ref="editForm" :rules="rules" :model="editForm" label-width="80px">
         <el-form-item label="用户名">
-          <el-tag type="info">{{editForm.username}}</el-tag>
+          <el-tag type="info">{{editForm.username}}</el-tag>  // 展示作用
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input placeholder="请输入邮箱" v-model="editForm.email"></el-input>
